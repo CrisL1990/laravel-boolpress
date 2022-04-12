@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
@@ -16,11 +17,32 @@ class PostController extends Controller
     public function index()
     {
         //$posts = Post::with(['category'])->get();
-        $posts = Post::with(['category'])->paginate(2);  
+        $posts = Post::with(['category','tags'])->paginate(2);  
        
         return response()->json([
             'results' => $posts,
             'success' => true
         ]);
+    }
+
+    public function show($slug){
+
+        $post = Post::where('slug','=',$slug)->with(['category','tags'])->first();
+
+        if($post){
+            return response()->json(
+                [
+                    'result'=>$post,
+                    'success'=>true
+                ]);
+        }
+
+        else{
+            return response()->json(
+                [
+                    'result'=>'Pagina non trovta',
+                    'success'=> false
+                ]);
+        }
     }
 }
