@@ -40,7 +40,7 @@ const router = new VueRouter({
             component: SinglePost 
         },
         {
-            path:'/blog/:slug',
+            path:'/*',
             name: 'not-found',
             component: NotFound 
         },

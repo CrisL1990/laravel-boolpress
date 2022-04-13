@@ -1,7 +1,20 @@
 <template>
-    <div>
-        <h1>{{post.title}}</h1>
-        <p>{{post.content}}</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div v-if="post">
+                    <h1>{{post.title}}</h1>
+                    <h3 v-if="post.category">Categoria: {{post.category.name}}</h3>
+                    <p>{{post.content}}</p>
+                    <p>Tags:</p>
+                    <ul>
+                        <li v-for="tag in post.tags" :key="tag.id">
+                            {{tag.name}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
