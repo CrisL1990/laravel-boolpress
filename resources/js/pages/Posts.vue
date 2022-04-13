@@ -10,7 +10,7 @@
                 <div class="card-body">
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text">{{ post.content }}</p>
-                <a href="#" class="btn btn-primary">Vedi articolo completo</a>
+                 <router-link class="nav-link" :to="{name:'single-post', params:{'slug': post.slug}}">Vedi Post</router-link>
                 </div>
             </div>
             </div>
@@ -30,7 +30,7 @@
 <script>
 export default {
 
-  name: "provvisorio",
+  name: "Posts",
 
   data() {
     return {
@@ -61,7 +61,7 @@ export default {
 
   created(){
     
-    this.getPosts();
+    this.getPosts(1);
   },
 
 };
