@@ -1985,9 +1985,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Post',
-  props: ['title', 'content', 'slug', 'category', 'tags'],
+  props: ['img', 'title', 'content', 'slug', 'category', 'tags'],
   data: function data() {
     return {
       textLen: 30
@@ -2099,6 +2100,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Post */ "./resources/js/components/Post.vue");
+//
 //
 //
 //
@@ -3518,6 +3520,11 @@ var render = function () {
         [
           _c("h1", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.title))]),
           _vm._v(" "),
+          _c("img", {
+            staticClass: "img-fluid",
+            attrs: { src: _vm.img, alt: "title" },
+          }),
+          _vm._v(" "),
           _c("h2", { staticClass: "card-text" }, [
             _vm._v(_vm._s(_vm.category ? _vm.category.name : "Not Set")),
           ]),
@@ -3717,6 +3724,7 @@ var render = function () {
                   slug: post.slug,
                   category: post.category,
                   tags: post.tags,
+                  img: post.cover,
                 },
               }),
             ],

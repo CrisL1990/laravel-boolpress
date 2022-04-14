@@ -8,6 +8,7 @@ use App\Post;
 use App\Tag;
 use Doctrine\Inflector\Rules\Word;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -54,13 +55,19 @@ class PostController extends Controller
                 'title' => 'required|min:5',
                 'content' => 'required|min:10',
                 'category_id' => 'nullable|exists:categories,id',
-                'tags' => 'nullable|exists:tags,id',
+                'tags' => 'nullable|exists:tags,id',  
+                'image' => 'nullable|image|max:2048' 
             ]
         );
 
         $data = $request->all();
-
-  
+        
+        if(isset($data['image'])){
+            $img_path = Storage::put('post_covers', $data['image']);
+            $data['cover'] = $img_path;
+        }
+       
+         
 
         $slug = Str::slug($data['title']);
 
@@ -124,10 +131,21 @@ class PostController extends Controller
                 'content' => 'required|min:10',
                 'category_id' => 'nullable|exists:categories,id',
                 'tags' => 'nullable|exists:tags,id',
+                'image' => 'nullable|image|max:2048' 
             ]
         );
 
         $data = $request->all();
+
+        if(isset($data['image'])){
+
+            if($post->cover){
+                Storage::delete($post->cover);
+            }
+           
+            $img_path = Storage::put('post_covers', $data['image']);
+            $data['cover'] = $img_path;
+        }
 
         $slug = Str::slug($data['title']);
 
@@ -155,7 +173,11 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
-    {
+    {   
+        if($post->cover){   
+            Storage::delete($post->cover);
+        }
+        
         $post->delete();
         return redirect()->route('admin.posts.index');
     }

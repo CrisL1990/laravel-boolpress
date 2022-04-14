@@ -18,6 +18,16 @@ class PostController extends Controller
     {
         //$posts = Post::with(['category'])->get();
         $posts = Post::with(['category','tags'])->paginate(2);  
+
+
+        $posts->each(function($post){
+            if($post->cover){
+                $post->cover = url('storage/'.$post->cover);
+            }else{
+                $post->cover = url('img/bird.jpg');
+            }
+        });
+
        
         return response()->json([
             'results' => $posts,

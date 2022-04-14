@@ -3,6 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <h1 class="card-title">{{title}}</h1>
+                <img class="img-fluid" :src="img" alt="title">
                 <h2 class="card-text">{{category?category.name:'Not Set'}}</h2>
                 <p class="card-text">{{cutText(content, textLen)}}</p>
                 <router-link class="nav-link" :to="{name:'single-post', params:{'slug': slug}}">Vedi Post</router-link>
@@ -14,7 +15,7 @@
 <script>
 export default {
     name: 'Post',
-    props: ['title', 'content', 'slug', 'category', 'tags'],
+    props: ['img', 'title', 'content', 'slug', 'category', 'tags'],
 
     data(){
         return{
