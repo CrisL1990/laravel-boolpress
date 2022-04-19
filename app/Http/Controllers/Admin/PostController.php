@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+
+
+
+
+
 class PostController extends Controller
 {
     /**
@@ -23,6 +28,11 @@ class PostController extends Controller
         $posts = Post::all();
         return view('admin.post.index', compact('posts'));
     }
+
+
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -38,6 +48,12 @@ class PostController extends Controller
         return view('admin.post.create', compact('categories', 'tags'));
 
     }
+
+
+
+
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -61,13 +77,15 @@ class PostController extends Controller
         );
 
         $data = $request->all();
-        
+       
+
         if(isset($data['image'])){
             $img_path = Storage::put('post_covers', $data['image']);
             $data['cover'] = $img_path;
+           
         }
        
-         
+  
 
         $slug = Str::slug($data['title']);
 
@@ -88,6 +106,18 @@ class PostController extends Controller
 
         return redirect()->route('admin.posts.index');
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Display the specified resource.
@@ -114,6 +144,14 @@ class PostController extends Controller
 
         return view('admin.post.edit', compact('post', 'categories', 'tags'));
     }
+
+
+
+
+
+
+
+
 
     /**
      * Update the specified resource in storage.
@@ -165,6 +203,16 @@ class PostController extends Controller
 
         return redirect()->route('admin.posts.index');
     }
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Remove the specified resource from storage.
