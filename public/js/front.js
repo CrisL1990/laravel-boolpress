@@ -2067,6 +2067,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Contact',
   data: function data() {
@@ -2083,13 +2089,13 @@ __webpack_require__.r(__webpack_exports__);
     sendForm: function sendForm() {
       var _this = this;
 
-      this.sending = false;
+      this.sending = true;
       axios.post('/api/contacts', {
         'name': this.name,
         'email': this.email,
         'message': this.message
       }).then(function (response) {
-        _this.sending = true;
+        _this.sending = false;
 
         if (response.data.errors) {
           _this.errors = response.data.errors;
@@ -3683,34 +3689,47 @@ var render = function () {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "name" } }, [
-          _vm._v("Inserisci il tuo nome"),
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.name,
-              expression: "name",
+      _c(
+        "div",
+        { staticClass: "form-group" },
+        [
+          _c("label", { attrs: { for: "name" } }, [
+            _vm._v("Inserisci il tuo nome"),
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name",
+              },
+            ],
+            staticClass: "form-control",
+            class: { "is-invalid": _vm.errors.name },
+            attrs: { type: "text", id: "name", name: "name" },
+            domProps: { value: _vm.name },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value
+              },
             },
-          ],
-          staticClass: "form-control",
-          class: { "is-valid": _vm.errors.name },
-          attrs: { type: "text", id: "name", name: "name" },
-          domProps: { value: _vm.name },
-          on: {
-            input: function ($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.name = $event.target.value
-            },
-          },
-        }),
-      ]),
+          }),
+          _vm._v(" "),
+          _vm._l(_vm.errors.name, function (error, index) {
+            return _c(
+              "p",
+              { key: "error-name" + index, staticClass: "invalid-feedback" },
+              [_vm._v("\n            " + _vm._s(error) + "\n        ")]
+            )
+          }),
+        ],
+        2
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -3730,7 +3749,7 @@ var render = function () {
               },
             ],
             staticClass: "form-control",
-            class: { "is-valid": _vm.errors.name },
+            class: { "is-invalid": _vm.errors.email },
             attrs: { type: "email", id: "email", name: "email" },
             domProps: { value: _vm.email },
             on: {
@@ -3743,10 +3762,12 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _vm._l(_vm.error.name, function (error, index) {
-            return _c("p", { key: "error-name" + index }, [
-              _vm._v("\n            " + _vm._s(error) + "\n        "),
-            ])
+          _vm._l(_vm.errors.email, function (error, index) {
+            return _c(
+              "p",
+              { key: "error-email" + index, staticClass: "invalid-feedback" },
+              [_vm._v("\n            " + _vm._s(error) + "\n        ")]
+            )
           }),
         ],
         2
@@ -3757,23 +3778,41 @@ var render = function () {
         { staticClass: "form-group" },
         [
           _c("label", { attrs: { for: "message" } }, [
-            _vm._v("Contenuto del messaggio"),
+            _vm._v("Contenuto messaggio:"),
           ]),
           _vm._v(" "),
-          _c("text-area", {
-            staticClass: "form-control",
-            class: { "is-valid": _vm.errors.message },
-            attrs: { type: "text", id: "message", name: "message" },
-            model: {
-              value: _vm.message,
-              callback: function ($$v) {
-                _vm.message = $$v
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.message,
+                expression: "message",
               },
-              expression: "message",
+            ],
+            staticClass: "form-control",
+            class: { "is-invalid": _vm.errors.message },
+            attrs: { id: "message", rows: "10", name: "message" },
+            domProps: { value: _vm.message },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.message = $event.target.value
+              },
             },
           }),
+          _vm._v(" "),
+          _vm._l(_vm.errors.message, function (error, index) {
+            return _c(
+              "p",
+              { key: "error_message" + index, staticClass: "invalid-feedback" },
+              [_vm._v("\n            " + _vm._s(error) + "\n        ")]
+            )
+          }),
         ],
-        1
+        2
       ),
       _vm._v(" "),
       _c(

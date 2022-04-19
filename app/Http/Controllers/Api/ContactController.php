@@ -26,18 +26,20 @@ class ContactController extends Controller
             return response()->json([
                 'success'=>false,
                 'errors'=>$validator->errors()
-            ]);   
-        } else {
-            $lead = new Lead();
-            $lead->fill($data);
-            $lead->save();
-
-            Mail::to('lucchetta.cris@gmail.com')->send(new NewContact($lead));
-
-            return response()->json([
-                'success'=>true
-            ]);
+            ]); 
 
         }
+
+        $lead = new Lead();
+        $lead->fill($data);
+        $lead->save();
+
+        Mail::to('lucchetta.cris@gmail.com')->send(new NewContact($lead));
+
+        return response()->json([
+            'success'=>true
+        ]);
+
+        
     }
 }

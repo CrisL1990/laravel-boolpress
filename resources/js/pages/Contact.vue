@@ -7,20 +7,26 @@
 
         <div class="form-group">
             <label for="name">Inserisci il tuo nome</label>
-            <input type="text" class="form-control" :class="{'is-valid':errors.name}" id="name" name="name" v-model="name"> 
-        </div>
-
-        <div class="form-group">
-            <label for="email">Inserisci la tua Email</label>
-            <input type="email" class="form-control" :class="{'is-valid':errors.name}" id="email" name="email" v-model="email">
-            <p v-for="(error, index) in error.name" :key="'error-name' + index">
+            <input type="text" class="form-control" :class="{'is-invalid':errors.name}" id="name" name="name" v-model="name"> 
+             <p v-for="(error, index) in errors.name" :key="'error-name' + index" class="invalid-feedback">
                 {{error}}
             </p>
         </div>
 
         <div class="form-group">
-            <label for="message">Contenuto del messaggio</label>
-            <text-area type="text" class="form-control" :class="{'is-valid':errors.message}" id="message" name="message" v-model="message"></text-area>
+            <label for="email">Inserisci la tua Email</label>
+            <input type="email" class="form-control" :class="{'is-invalid':errors.email}" id="email" name="email" v-model="email">
+            <p v-for="(error, index) in errors.email" :key="'error-email' + index" class="invalid-feedback">
+                {{error}}
+            </p>
+        </div>
+
+        <div class="form-group">
+            <label for="message">Contenuto messaggio:</label>
+            <textarea class="form-control" :class="{'is-invalid':errors.message}" id="message" rows="10" name="message" v-model="message"></textarea>
+            <p v-for="(error, index) in errors.message" :key="'error_message'+index" class="invalid-feedback">
+                {{error}}
+            </p>
         </div>
        
         <button type="submit" class="btn btn-primary">{{sending?'Invio in corso':'Invia'}}</button>
@@ -47,13 +53,14 @@ export default {
      methods: {
       sendForm() {
 
-          this.sending = false
+          this.sending = true;
+
           axios.post('/api/contacts', {
               'name': this.name,
               'email': this.email,
               'message': this.message
           }).then(response => {
-            this.sending = true;
+            this.sending = false;
               
             if(response.data.errors){
                 this.errors = response.data.errors;
